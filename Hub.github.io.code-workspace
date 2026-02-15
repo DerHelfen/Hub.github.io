@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "hub",
+			"name": "hub"
+		},
+		{
+			"path": "docs",
+			"name": "docs"
+		},
+		{
+			"path": "plan",
+			"name": "plan"
+		}
+	],
+	"settings": {}
+}
