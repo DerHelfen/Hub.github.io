@@ -24,6 +24,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # --- START PRIVATE DATA INTEGRATION ---
+      - name: Checkout private data repository
+        if: ${{ secrets.PRIVATE_DATA_TOKEN != '' }}
+        uses: actions/checkout@v4
+        with:
+          repository: derhelfen/Hub-private-data
+          token: ${{ secrets.PRIVATE_DATA_TOKEN }}
+          path: private-data-temp
+
+      - name: Integrate private links
+        if: ${{ secrets.PRIVATE_DATA_TOKEN != '' }}
+        run: |
+          if [ -f "private-data-temp/links.js" ]; then
+            cp private-data-temp/links.js src/data/links.js
+            echo "Private links.js successfully integrated."
+          else
+            echo "Warning: private-data-temp/links.js not found. Using local links.js."
+          fi
+      # --- END PRIVATE DATA INTEGRATION ---
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
