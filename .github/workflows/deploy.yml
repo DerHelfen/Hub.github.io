@@ -19,6 +19,8 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      PRIVATE_DATA_TOKEN: ${{ secrets.PRIVATE_DATA_TOKEN }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,7 +28,7 @@ jobs:
 
       # --- START PRIVATE DATA INTEGRATION ---
       - name: Checkout private data repository
-        if: ${{ secrets.PRIVATE_DATA_TOKEN != '' }}
+        if: env.PRIVATE_DATA_TOKEN != ''
         uses: actions/checkout@v4
         with:
           repository: derhelfen/Hub-private-data
@@ -34,7 +36,7 @@ jobs:
           path: private-data-temp
 
       - name: Integrate private links
-        if: ${{ secrets.PRIVATE_DATA_TOKEN != '' }}
+        if: env.PRIVATE_DATA_TOKEN != ''
         run: |
           if [ -f "private-data-temp/links.js" ]; then
             cp private-data-temp/links.js src/data/links.js
