@@ -11,6 +11,10 @@
 		{
 			"path": "plan",
 			"name": "plan"
+		},
+		{
+			"path": ".github",
+			"name": ".github"
 		}
 	],
 	"settings": {}
