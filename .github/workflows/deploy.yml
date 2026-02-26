@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       # --- START PRIVATE DATA INTEGRATION ---
       - name: Checkout private data repository
@@ -33,6 +35,7 @@ jobs:
         with:
           repository: ${{ github.repository_owner }}/Hub-private-data
           token: ${{ secrets.PRIVATE_DATA_TOKEN }}
+          persist-credentials: false
           ref: main
           path: private-data-temp
 
