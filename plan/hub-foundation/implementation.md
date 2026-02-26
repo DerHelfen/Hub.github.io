@@ -13,13 +13,13 @@ If not, move them to the correct branch. If the branch does not exist, create it
 
 #### Step 1: Development Environment Setup
 
-- [ ] Create the `hub/` directory if it doesn't exist.
-- [ ] Initialize `hub/package.json` with core dependencies.
-- [ ] Create Tailwind and PostCSS configuration files.
-- [ ] Create the base `index.html` structure.
-- [ ] Create the project entry point and initial CSS.
+- [x] Create the `hub/` directory if it doesn't exist.
+- [x] Initialize `hub/package.json` with core dependencies.
+- [x] Create Tailwind and PostCSS configuration files.
+- [x] Create the base `index.html` structure.
+- [x] Create the project entry point and initial CSS.
 
-- [ ] Copy and paste code below into `hub/package.json`:
+- [x] Copy and paste code below into `hub/package.json`:
 
 ```json
 {
@@ -47,7 +47,7 @@ If not, move them to the correct branch. If the branch does not exist, create it
 }
 ```
 
-- [ ] Copy and paste code below into `hub/tailwind.config.js`:
+- [x] Copy and paste code below into `hub/tailwind.config.js`:
 
 ```javascript
 /** @type {import('tailwindcss').Config} */
@@ -64,7 +64,7 @@ export default {
 };
 ```
 
-- [ ] Copy and paste code below into `hub/postcss.config.js`:
+- [x] Copy and paste code below into `hub/postcss.config.js`:
 
 ```javascript
 export default {
@@ -75,7 +75,7 @@ export default {
 };
 ```
 
-- [ ] Copy and paste code below into `hub/index.html`:
+- [x] Copy and paste code below into `hub/index.html`:
 
 ```html
 <!doctype html>
@@ -93,7 +93,7 @@ export default {
 </html>
 ```
 
-- [ ] Copy and paste code below into `hub/src/index.css`:
+- [x] Copy and paste code below into `hub/src/index.css`:
 
 ```css
 @tailwind base;
@@ -111,7 +111,7 @@ body {
 }
 ```
 
-- [ ] Copy and paste code below into `hub/src/main.jsx`:
+- [x] Copy and paste code below into `hub/src/main.jsx`:
 
 ```jsx
 import React from "react";
@@ -128,9 +128,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
 ##### Step 1 Verification Checklist
 
-- [ ] Run `cd hub; npm install` successfully.
-- [ ] Run `npm run dev` and verify service starts.
-- [ ] Visual confirmation of a blank page or basic "hello" if App.jsx was created (Step 3 handles App.jsx content).
+- [x] Run `cd hub; npm install` successfully.
+- [x] Run `npm run dev` and verify service starts.
+- [x] Visual confirmation of a blank page or basic "hello" if App.jsx was created (Step 3 handles App.jsx content).
 
 #### Step 1 STOP & COMMIT
 
@@ -151,7 +151,7 @@ import react from "@vitejs/plugin-react";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "/Hub.github.io/",
+  base: "/hub/",
   server: {
     port: 5173,
     open: true,
@@ -248,17 +248,117 @@ dist-ssr
 ##### Step 2 Verification Checklist
 
 - [ ] Run `npm run build` inside `hub/` and check if `dist/` folder is generated.
-- [ ] Verify `hub/dist/index.html` contains references to `/Hub.github.io/`.
+- [ ] Verify `hub/dist/index.html` contains references to `/hub/`.
 - [ ] Verify `.gitignore` is working (dist and node_modules are not tracked).
 
 #### Step 2 STOP & COMMIT
 
 **STOP & COMMIT:** Agent must stop here and wait for the user to test, stage, and commit the change.
 
-#### Step 3: Landing Page & Widgets Components
+#### Step 3: Landing Page & Refined UI Components
 
-- [ ] Create the `HubLink`, `Clock`, and `Weather` components.
-- [ ] Implement the main `App.jsx` layout with categorized sections.
+- [ ] Create the data configuration file for links.
+- [ ] Create the refined UI components (SearchBar, CategorySection, Clock, Weather, HubLink).
+- [ ] Implement the optimized `App.jsx` with mesh gradient background.
+
+- [ ] Copy and paste code below into `hub/src/data/links.js`:
+
+```javascript
+export const INITIAL_LINKS = [
+  {
+    id: 1,
+    title: "GitHub",
+    url: "https://github.com",
+    category: "Work",
+    description: "Source control and collaboration",
+  },
+  {
+    id: 2,
+    title: "Gmail",
+    url: "https://mail.google.com",
+    category: "Personal",
+    description: "Personal email account",
+  },
+  {
+    id: 3,
+    title: "YouTube",
+    url: "https://youtube.com",
+    category: "Entertainment",
+    description: "Videos and streaming",
+  },
+  {
+    id: 4,
+    title: "Stack Overflow",
+    url: "https://stackoverflow.com",
+    category: "Work",
+    description: "Programming Q&A",
+  },
+  {
+    id: 5,
+    title: "LinkedIn",
+    url: "https://linkedin.com",
+    category: "Work",
+    description: "Professional networking",
+  },
+  {
+    id: 6,
+    title: "Netflix",
+    url: "https://netflix.com",
+    category: "Entertainment",
+    description: "Movies and Series",
+  },
+];
+```
+
+- [ ] Copy and paste code below into `hub/src/components/SearchBar.jsx`:
+
+```jsx
+import React from "react";
+import { Search as SearchIcon } from "lucide-react";
+
+const SearchBar = ({ searchTerm, setSearchTerm }) => {
+  return (
+    <div className="relative max-w-2xl mx-auto w-full">
+      <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
+      <input
+        type="text"
+        placeholder="Search links or categories..."
+        className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/60 backdrop-blur-md border border-white/20 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50 transition-all text-lg text-slate-800 placeholder:text-slate-400"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+    </div>
+  );
+};
+
+export default SearchBar;
+```
+
+- [ ] Copy and paste code below into `hub/src/components/CategorySection.jsx`:
+
+```jsx
+import React from "react";
+import HubLink from "./HubLink";
+
+const CategorySection = ({ title, links }) => {
+  if (links.length === 0) return null;
+
+  return (
+    <section className="space-y-6">
+      <h2 className="text-2xl font-bold text-slate-800 border-l-4 border-blue-400 pl-4">
+        {title}
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {links.map((link) => (
+          <HubLink key={link.id} {...link} />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default CategorySection;
+```
 
 - [ ] Copy and paste code below into `hub/src/components/Clock.jsx`:
 
@@ -357,117 +457,63 @@ export default HubLink;
 - [ ] Copy and paste code below into `hub/src/App.jsx`:
 
 ```jsx
-import React, { useState } from "react";
-import { Search } from "lucide-react";
+import React, { useState, useMemo } from "react";
 import Clock from "./components/Clock";
 import Weather from "./components/Weather";
-import HubLink from "./components/HubLink";
-
-const INITIAL_LINKS = [
-  {
-    id: 1,
-    title: "GitHub",
-    url: "https://github.com",
-    category: "Work",
-    description: "Source control and collaboration",
-  },
-  {
-    id: 2,
-    title: "Gmail",
-    url: "https://mail.google.com",
-    category: "Personal",
-    description: "Personal email account",
-  },
-  {
-    id: 3,
-    title: "YouTube",
-    url: "https://youtube.com",
-    category: "Entertainment",
-    description: "Videos and streaming",
-  },
-  {
-    id: 4,
-    title: "Stack Overflow",
-    url: "https://stackoverflow.com",
-    category: "Work",
-    description: "Programming Q&A",
-  },
-  {
-    id: 5,
-    title: "LinkedIn",
-    url: "https://linkedin.com",
-    category: "Work",
-    description: "Professional networking",
-  },
-  {
-    id: 6,
-    title: "Netflix",
-    url: "https://netflix.com",
-    category: "Entertainment",
-    description: "Movies and Series",
-  },
-];
+import SearchBar from "./components/SearchBar";
+import CategorySection from "./components/CategorySection";
+import { INITIAL_LINKS } from "./data/links";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredLinks = INITIAL_LINKS.filter(
-    (link) =>
-      link.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      link.category.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
-
-  const categories = [...new Set(INITIAL_LINKS.map((link) => link.category))];
+  const { categories, filteredLinks } = useMemo(() => {
+    const filtered = INITIAL_LINKS.filter(
+      (link) =>
+        link.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        link.category.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+    const cats = [...new Set(INITIAL_LINKS.map((link) => link.category))];
+    return { filteredLinks: filtered, categories: cats };
+  }, [searchTerm]);
 
   return (
-    <div className="min-h-screen bg-slate-50/50 p-8 md:p-16">
-      <div className="max-w-6xl mx-auto space-y-12">
-        {/* Widget Area */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <Clock />
-          <Weather />
-        </div>
+    <div className="relative min-h-screen bg-slate-50 overflow-hidden">
+      {/* Mesh Gradient Background Decorations */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-200/30 rounded-full blur-[120px] animate-pulse" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-200/30 rounded-full blur-[120px] animate-pulse" />
+      <div className="absolute top-[20%] right-[10%] w-[20%] h-[20%] bg-amber-100/40 rounded-full blur-[80px]" />
 
-        {/* Search Bar */}
-        <div className="relative max-w-2xl mx-auto">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-          <input
-            type="text"
-            placeholder="Search links or categories..."
-            className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/60 backdrop-blur-md border border-white/20 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50 transition-all text-lg"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-
-        {/* Categories and Links */}
-        <div className="space-y-12">
-          {categories.map((category) => {
-            const categoryLinks = filteredLinks.filter(
-              (link) => link.category === category,
-            );
-            if (categoryLinks.length === 0) return null;
-
-            return (
-              <section key={category} className="space-y-6">
-                <h2 className="text-2xl font-bold text-slate-800 border-l-4 border-blue-400 pl-4">
-                  {category}
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {categoryLinks.map((link) => (
-                    <HubLink key={link.id} {...link} />
-                  ))}
-                </div>
-              </section>
-            );
-          })}
-        </div>
-
-        {searchTerm && filteredLinks.length === 0 && (
-          <div className="text-center py-12 text-slate-500">
-            No links found for "{searchTerm}"
+      <div className="relative z-10 p-8 md:p-16">
+        <div className="max-w-6xl mx-auto space-y-12">
+          {/* Widget Area */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Clock />
+            <Weather />
           </div>
-        )}
+
+          {/* Search Bar */}
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+          {/* Categories and Links */}
+          <div className="space-y-12">
+            {categories.map((category) => (
+              <CategorySection
+                key={category}
+                title={category}
+                links={filteredLinks.filter(
+                  (link) => link.category === category,
+                )}
+              />
+            ))}
+          </div>
+
+          {searchTerm && filteredLinks.length === 0 && (
+            <div className="text-center py-12 text-slate-500 bg-white/40 backdrop-blur-md rounded-2xl border border-white/20">
+              No links found for "{searchTerm}"
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -478,11 +524,12 @@ export default App;
 
 ##### Step 3 Verification Checklist
 
-- [ ] Verify `npm run dev` displays the full dashboard.
-- [ ] Confirm Clock updates every second.
-- [ ] Confirm link cards open in a new tab.
-- [ ] Verify search functionality filters the links in real-time.
-- [ ] Verify responsive layout on mobile/desktop.
+- [ ] Verify `npm run dev` displays the full dashboard with the new mesh gradient background.
+- [ ] Confirm background blobs are visible beneath the glassmorphism blur of the cards.
+- [ ] Confirm Clock and Weather widgets function as expected.
+- [ ] Verify search performance is smooth (using `useMemo` optimization).
+- [ ] Confirm link data is correctly loaded from `src/data/links.js`.
+- [ ] Verify responsive layout across different screen sizes.
 
 #### Step 3 STOP & COMMIT
 
