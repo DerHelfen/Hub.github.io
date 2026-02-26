@@ -31,7 +31,7 @@ jobs:
         if: env.PRIVATE_DATA_TOKEN != ''
         uses: actions/checkout@v4
         with:
-          repository: derhelfen/Hub-private-data
+          repository: ${{ github.repository_owner }}/Hub-private-data
           token: ${{ secrets.PRIVATE_DATA_TOKEN }}
           path: private-data-temp
 
