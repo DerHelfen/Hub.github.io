@@ -29,6 +29,13 @@ jobs:
           persist-credentials: false
 
       # --- START PRIVATE DATA INTEGRATION ---
+      - name: Verify private data token
+        if: env.PRIVATE_DATA_TOKEN != ''
+        run: |
+          echo "PRIVATE_DATA_TOKEN is set (length: ${#PRIVATE_DATA_TOKEN})"
+        env:
+          PRIVATE_DATA_TOKEN: ${{ secrets.PRIVATE_DATA_TOKEN }}
+
       - name: Checkout private data repository
         if: env.PRIVATE_DATA_TOKEN != ''
         uses: actions/checkout@v4
@@ -42,11 +49,14 @@ jobs:
       - name: Integrate private links
         if: env.PRIVATE_DATA_TOKEN != ''
         run: |
-          if [ -f "private-data-temp/links.js" ]; then
-            cp private-data-temp/links.js src/data/links.js
-            echo "Private links.js successfully integrated."
+          PRIVATE_LINKS="private-data-temp/src/data/links.js"
+          if [ -f "$PRIVATE_LINKS" ]; then
+            cp "$PRIVATE_LINKS" src/data/links.js
+            echo "Private links.js successfully integrated from $PRIVATE_LINKS."
           else
-            echo "Warning: private-data-temp/links.js not found. Using local links.js."
+            echo "Warning: $PRIVATE_LINKS not found. Listing private-data-temp contents:"
+            find private-data-temp -type f | head -20
+            echo "Using local links.js."
           fi
       # --- END PRIVATE DATA INTEGRATION ---
       - name: Set up Node
