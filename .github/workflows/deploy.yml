@@ -33,6 +33,7 @@ jobs:
         with:
           repository: ${{ github.repository_owner }}/Hub-private-data
           token: ${{ secrets.PRIVATE_DATA_TOKEN }}
+          ref: main
           path: private-data-temp
 
       - name: Integrate private links
