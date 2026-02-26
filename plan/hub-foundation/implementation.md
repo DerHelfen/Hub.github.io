@@ -138,11 +138,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
 #### Step 2: GitHub Pages Deployment Configuration
 
-- [ ] Update Vite configuration with the correct base path.
-- [ ] Create the GitHub Actions workflow file.
-- [ ] Setup `.gitignore` to exclude build artifacts.
+- [x] Update Vite configuration with the correct base path.
+- [x] Create the GitHub Actions workflow file.
+- [x] Setup `.gitignore` to exclude build artifacts.
 
-- [ ] Copy and paste code below into `hub/vite.config.js`:
+- [x] Copy and paste code below into `hub/vite.config.js`:
 
 ```javascript
 import { defineConfig } from "vite";
@@ -159,7 +159,7 @@ export default defineConfig({
 });
 ```
 
-- [ ] Copy and paste code below into `.github/workflows/deploy.yml`:
+- [x] Copy and paste code below into `.github/workflows/deploy.yml`:
 
 ```yaml
 name: Deploy to GitHub Pages
@@ -216,7 +216,7 @@ jobs:
         uses: actions/deploy-pages@v4
 ```
 
-- [ ] Copy and paste code below into `hub/.gitignore`:
+- [x] Copy and paste code below into `hub/.gitignore`:
 
 ```text
 # Logs
@@ -247,9 +247,9 @@ dist-ssr
 
 ##### Step 2 Verification Checklist
 
-- [ ] Run `npm run build` inside `hub/` and check if `dist/` folder is generated.
-- [ ] Verify `hub/dist/index.html` contains references to `/hub/`.
-- [ ] Verify `.gitignore` is working (dist and node_modules are not tracked).
+- [x] Run `npm run build` inside `hub/` and check if `dist/` folder is generated.
+- [x] Verify `hub/dist/index.html` contains references to `/hub/`.
+- [x] Verify `.gitignore` is working (dist and node_modules are not tracked).
 
 #### Step 2 STOP & COMMIT
 
