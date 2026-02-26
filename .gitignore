@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Private Data
+/src/data/links.js
+/plan/bookmark-import/bookmarks-2026-02-26.json
